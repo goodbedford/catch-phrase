@@ -55,7 +55,7 @@ app.post('/api/phrases', function (req, res) {
   phrases.push(newPhrase);
   
   // send newPhrase as JSON response
-  res.json(newPhrase);
+  res.status(201).json(newPhrase);
 });
 
 // update phrase
@@ -74,7 +74,7 @@ app.put('/api/phrases/:id', function(req, res) {
   foundPhrase.definition = req.body.definition;
 
   // send back edited object
-  res.json(foundPhrase);
+  res.status(200).json(foundPhrase);
 });
 
 // delete phrase
@@ -127,8 +127,12 @@ app.route('/api/study-sets')
 app.route('/api/study-sets/:setId')
   .get(function(req, res) {
     // save the value of the id, and find the set
-
+    var targetSetId = parseInt(req.params.setId);
+    console.log("this is cray")
+    console.log(req.params.id);
+    var set = _.findWhere(studySets, {id: targetSetId});
     // send back the set
+    res.json(set);
   })
   .put(function(req,res){
     // set the value of the id
